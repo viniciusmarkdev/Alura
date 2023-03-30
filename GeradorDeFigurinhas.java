@@ -1,7 +1,9 @@
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
+
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
@@ -11,10 +13,17 @@ import java.awt.Font;
 public class GeradorDeFigurinhas {
 
 	
-	public void criar() throws IOException {
+	public void criar(InputStream inputStream , String nomeArquivo) throws IOException {
 		
 		//leitura da imagem
-		BufferedImage imagemOriginal = ImageIO.read(new File("entrada/filme.jpg"));
+        //A classe InpuStream implementa o polimorfismo.Podemos ler bytes de diferentes formas.
+        // InputStream  inputStream = new FileInputStream(new File("entrada/filme.jpg"));
+
+       //Lendo a imagem da url
+	   //InputStream inputStream = new URL("https://raw.githubusercontent.com/alura-cursos/imersao-java-2-api/main/TopMovies_1.jpg")
+       //.openStream();
+		BufferedImage imagemOriginal = ImageIO.read(inputStream);
+
 		
 		//criar nova imagem em memória com transparência e com tamanho novo
 		int largura = imagemOriginal.getWidth();
@@ -37,13 +46,8 @@ public class GeradorDeFigurinhas {
         graphics.drawString("TOMEI UM MELZINHO" , 0 , novaAltura-100 );
 		//Escrever  a nova imagem em um arquivo
 		//*Desafio criar um diretório pelo código
-		ImageIO.write(novaImagem, "png"  , new File("saida/figurinha.png"));
+		ImageIO.write(novaImagem, "png"  , new File(nomeArquivo));
 	}
 	
-	public static void main(String[] args) throws IOException {
-		
-		var gerardor = new GeradorDeFigurinhas();
-		gerardor.criar();
-		
-	}
+	
 }
